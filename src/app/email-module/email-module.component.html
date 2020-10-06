@@ -1,0 +1,99 @@
+<div class="container">
+  <h2 class="display-1">Compose Email</h2>
+
+  <form #emailForm="ngForm" name="emailForm" (ngSubmit)="sendForm()">
+    <div class="form-group">
+      <label> From </label>
+      <input
+        class="form-control"
+        type="text"
+        required
+        [(ngModel)]="emailObject.formEmail"
+        name="formEmail"
+        #formEmail="ngModel"
+        [ngClass]="formEmail.valid || formEmail.pristine ? '' : 'bg-danger'"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+      />
+    </div>
+
+    <div class="form-group">
+      <label> To </label>
+      <input
+        class="form-control"
+        type="text"
+        required
+        [(ngModel)]="emailObject.toEmail"
+        name="toEmail"
+        #toEmail="ngModel"
+        [ngClass]="toEmail.valid || toEmail.pristine ? '' : 'bg-danger'"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+      />
+    </div>
+
+    <div class="form-group">
+      <label> Subject </label>
+      <input
+        class="form-control"
+        type="text"
+        required
+        [(ngModel)]="emailObject.subject"
+        name="subject"
+        #subject="ngModel"
+        [ngClass]="subject.valid || subject.pristine ? '' : 'bg-danger'"
+        placeholder="(Maximum 50 characters)"
+        maxLength="50"
+      />
+      <h6 *ngIf="subject?.value?.length == 50" class="text-danger">
+        The value is too long
+      </h6>
+    </div>
+
+    <div class="form-group">
+      <label> Enter the body text for mail: </label>
+      <textarea
+        class="form-control"
+        type="text"
+        [(ngModel)]="emailObject.body"
+        name="body"
+        #body="ngModel"
+        placeholder="(Optional)"
+      >
+      </textarea>
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        ngbButton
+        class="btn btn-primary btn-sm mr-1"
+        [disabled]="!emailForm.valid"
+      >
+        Submit to List
+      </button>
+      <button
+        (click)="resetForm()"
+        type="button"
+        class="btn btn-primary btn-sm mr-1"
+      >
+        Reset
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="emailList.length">
+    <h3>Here is the email list!!</h3>
+
+    <ul class="list-group">
+      <li *ngFor="let emailObj of emailList" class="list-group-item">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">FROM : {{ emailObj.formEmail }}</h5>
+            <h5 class="card-title">TO : {{ emailObj.toEmail }}</h5>
+            <h6 class="card-text">SUBJECT : {{ emailObj.subject }}</h6>
+            <p class="card-text">BODY : {{ emailObj.body }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

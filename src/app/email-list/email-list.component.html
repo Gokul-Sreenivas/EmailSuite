@@ -1,0 +1,51 @@
+<h3>Here is the email list!!</h3>
+<label>
+  Enter text to filter result
+  <input type="text" class="form-control" [(ngModel)]="FilterEmailId" />
+</label>
+
+<br />
+
+
+<ul class="list-group">
+
+  <li
+    *ngFor="let emailObj of emailList | emailPipeFilter: FilterEmailId"
+    class="list-group-item"
+  >
+
+    <!-- <div>{{ emailObj.formEmail === "" | json }}</div>
+    <div>{{ emailObj | json }}</div> -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">FROM : {{ emailObj.formEmail }}</h5>
+        <h5 class="card-title">TO : {{ emailObj.toEmail }}</h5>
+        <h6 class="card-text">SUBJECT : {{ emailObj.subject }}</h6>
+        <p class="card-text">BODY : {{ emailObj.body }}</p>
+        <button
+          (click)="removeEmail(emailObj.id)"
+          type="button"
+          class="btn btn-outline-danger"
+          style="margin: 10px"
+        >
+          Delete
+        </button>
+        <!-- <button
+          (click)="redirectTo(emailObj.id)"
+          type="button"
+          class="btn btn-outline-info"
+        > -->
+        <button
+          type="button"
+          [routerLink]="['/email_viewer/' + (emailObj.id)]"
+          class="btn btn-outline-info"
+        >
+          Info
+        </button>
+      </div>
+    </div>
+  </li>
+</ul>
+
+<!-- <div *ngIf="emailObj.formEmail.startwith("g")"></div>
+    </div> -->
